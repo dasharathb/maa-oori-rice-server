@@ -51,18 +51,25 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public @ResponseBody LoginDtl login(@RequestParam LoginDtl loginDtl,  HttpServletRequest req, HttpServletResponse response){
-		System.out.println("this is login method..................");
+	public @ResponseBody LoginDtl login(@RequestParam String userName, @RequestParam String password,  HttpServletRequest req, HttpServletResponse response){
+		System.out.println("this is login method....1 ..............");
 		
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		//response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-	    
-		System.out.println("loginDtl :::::::::::::::: "+loginDtl.toString());
+		LoginDtl loginDtl = new LoginDtl();
+		loginDtl.setUserName(userName);
+		loginDtl.setPassword(password);
+		
+		System.out.println("loginDtl :::::::::::::::: "+loginDtl);
 		
 		LoginDtl dtl = loginService.getLoginDtls(loginDtl);
-		System.out.println("loginDtl :::::::::::::::: "+dtl.toString());
-		
-		return dtl;
+		if(dtl != null && !loginDtl.getPassword().equals(dtl.getPassword())){
+			loginDtl.setMessage("password incorrect...");
+			return loginDtl;
+		}else{
+			dtl.setPassword("");
+			return dtl;
+		}
 	}
 }

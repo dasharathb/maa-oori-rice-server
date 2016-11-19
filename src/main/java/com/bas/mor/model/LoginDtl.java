@@ -12,18 +12,20 @@ public class LoginDtl {
 	private String password;
 	private String firstName;
 	private String lastName;
+	private String message;
 	
 	public LoginDtl() {
 		super();
 	}
 
-	public LoginDtl(String id, String userName, String password, String firstName, String lastName) {
+	public LoginDtl(String id, String userName, String password, String firstName, String lastName, String message) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.message = message;
 	}
 
 	public String getId() {
@@ -66,10 +68,18 @@ public class LoginDtl {
 		this.lastName = lastName;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	@Override
 	public String toString() {
 		return "LoginDtl [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + "]";
+				+ ", lastName=" + lastName + ", message=" + message + "]";
 	}
-		
+			
 }

@@ -55,12 +55,13 @@ public class AppConfig {
 	    // Mongo DB Factory
 	    SimpleMongoDbFactory simpleMongoDbFactory = new SimpleMongoDbFactory(
 	            mongoClient, mongoDB);
-
+System.out.println("mongoDB::::"+mongoDB+" :::: mongoUser:::::::"+mongoUser+" ::::::::mongoPwd::::::::::::::"+mongoPwd+" :::::::host::::"+mongoHost);
 	    return simpleMongoDbFactory;
 	}	
 
     @Bean(name = "mongoTemplate")
     public MongoTemplate mongoTemplateLocal() throws Exception{
+    	System.out.println("mongoDBFactory() ************************************************************************ "+mongoDBFactory());
         return new MongoTemplate(mongoDBFactory());
     }
 	
