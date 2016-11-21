@@ -30,8 +30,7 @@ public class HomeController {
 		System.out.println("this is home controller..................");
 		
 		response.addHeader("Access-Control-Allow-Origin", "*");
-		//response.addHeader("Access-Control-Allow-Origin", "*");
-		 response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
 	        
 		
 		List<Person> list = new ArrayList<Person>();
@@ -54,34 +53,31 @@ public class HomeController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public @ResponseBody LoginDtl login(@RequestParam(value="loginDtl") Object login, HttpServletRequest request, HttpServletResponse response){
-		System.out.println("this is login method....1 ..............");
 		
 		ObjectMapper objMapper = new ObjectMapper();
-		LoginDtl login2 = null;
+		LoginDtl loginDtl = null;
+		LoginDtl dtl = null;
 		try {
-			login2 = objMapper.readValue(login.toString(), LoginDtl.class);
+			loginDtl = objMapper.readValue(login.toString(), LoginDtl.class);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		response.addHeader("Access-Control-Allow-Origin", "*");
-		//response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-		LoginDtl loginDtl = new LoginDtl();
-		loginDtl.setUserName("");
-		loginDtl.setPassword("");
 		
-		System.out.println("loginDtl :::::::::::::::: "+login2.toString());
+		System.out.println("loginDtl :::::::::::::::: "+loginDtl.toString());
 		
-		LoginDtl dtl = null;//loginService.getLoginDtls(loginDtl);
-		if(dtl != null && !loginDtl.getPassword().equals(dtl.getPassword())){
-			loginDtl.setMessage("password incorrect...");
+		dtl = loginService.getLoginDtls(loginDtl);
+		if(dtl == null){
+			loginDtl.setMessage("incorrect user or password...");
 			return loginDtl;
-		}else{
-			//dtl.setPassword("");
-			return dtl;
+		}else if(!loginDtl.getPassword().equals(dtl.getPassword())){
+			loginDtl.setMessage("incorrect user or password...");
+			return loginDtl;
 		}
+		
+		return dtl;
 	}
 }
