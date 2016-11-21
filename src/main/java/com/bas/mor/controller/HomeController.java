@@ -1,5 +1,6 @@
 package com.bas.mor.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bas.mor.model.LoginDtl;
 import com.bas.mor.model.Person;
 import com.bas.mor.service.LoginService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class HomeController {
@@ -51,24 +53,34 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public @ResponseBody LoginDtl login(@RequestParam String userName, @RequestParam String password,  HttpServletRequest req, HttpServletResponse response){
+	public @ResponseBody LoginDtl login(@RequestParam(value="loginDtl") Object login, HttpServletRequest request, HttpServletResponse response){
 		System.out.println("this is login method....1 ..............");
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		LoginDtl login2 = null;
+		try {
+			login2 = objMapper.readValue(login.toString(), LoginDtl.class);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		//response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
 		LoginDtl loginDtl = new LoginDtl();
-		loginDtl.setUserName(userName);
-		loginDtl.setPassword(password);
+		loginDtl.setUserName("");
+		loginDtl.setPassword("");
 		
-		System.out.println("loginDtl :::::::::::::::: "+loginDtl);
+		System.out.println("loginDtl :::::::::::::::: "+login2.toString());
 		
-		LoginDtl dtl = loginService.getLoginDtls(loginDtl);
+		LoginDtl dtl = null;//loginService.getLoginDtls(loginDtl);
 		if(dtl != null && !loginDtl.getPassword().equals(dtl.getPassword())){
 			loginDtl.setMessage("password incorrect...");
 			return loginDtl;
 		}else{
-			dtl.setPassword("");
+			//dtl.setPassword("");
 			return dtl;
 		}
 	}
