@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bas.mor.model.LoginDtl;
 import com.bas.mor.model.Person;
-import com.bas.mor.service.LoginService;
+import com.bas.mor.model.UserDtl;
+import com.bas.mor.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	LoginService loginService;
+	UserService userService;
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public @ResponseBody List<Person> homepage(HttpServletRequest req, HttpServletResponse response){
@@ -60,7 +61,8 @@ public class HomeController {
 		try {
 			loginDtl = objMapper.readValue(login.toString(), LoginDtl.class);
 			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -69,7 +71,7 @@ public class HomeController {
 		
 		System.out.println("loginDtl :::::::::::::::: "+loginDtl.toString());
 		
-		dtl = loginService.getLoginDtls(loginDtl);
+		dtl = userService.getLoginDtls(loginDtl);
 		if(dtl == null){
 			loginDtl.setMessage("incorrect user or password...");
 			return loginDtl;
@@ -80,4 +82,26 @@ public class HomeController {
 		
 		return dtl;
 	}
+	@RequestMapping(value="/regUser" , method=RequestMethod.GET )
+	public @ResponseBody String regUser(@RequestParam(value="userDtl") Object uDtl,HttpServletRequest request ,HttpServletResponse response){
+		ObjectMapper objMapper=new ObjectMapper();
+		UserDtl userDtl=null;
+		UserDtl dtl=null;
+		try{
+			userDtl=objMapper.readValue(uDtl.toString(),UserDtl.class);
+		}
+		catch(Exception e )
+		{
+			e.printStackTrace();
+		}
+	
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+		System.out.println("User deatails*********************"+userDtl.toString());
+		dtl=userService.saveUserDtl(userDtl);
+		//return dtl;	
+		
+		return "success";
+	}
+	
 }

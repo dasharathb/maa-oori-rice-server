@@ -14,6 +14,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.bas.mor.dao.UserDao;
+import com.bas.mor.dao.UserDaoImpl;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -26,6 +28,7 @@ import com.mongodb.ServerAddress;
 @ComponentScan("com.bas.mor*")
 @EnableAsync
 @EnableScheduling
+
 @Configuration
 public class AppConfig {
 
@@ -53,9 +56,8 @@ public class AppConfig {
 	    MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential)); 
 
 	    // Mongo DB Factory
-	    SimpleMongoDbFactory simpleMongoDbFactory = new SimpleMongoDbFactory(
-	            mongoClient, mongoDB);
-System.out.println("mongoDB::::"+mongoDB+" :::: mongoUser:::::::"+mongoUser+" ::::::::mongoPwd::::::::::::::"+mongoPwd+" :::::::host::::"+mongoHost);
+	    SimpleMongoDbFactory simpleMongoDbFactory = new SimpleMongoDbFactory(mongoClient, mongoDB);
+	    System.out.println("mongoDB::::"+mongoDB+" :::: mongoUser:::::::"+mongoUser+" ::::::::mongoPwd::::::::::::::"+mongoPwd+" :::::::host::::"+mongoHost);
 	    return simpleMongoDbFactory;
 	}	
 
@@ -64,5 +66,6 @@ System.out.println("mongoDB::::"+mongoDB+" :::: mongoUser:::::::"+mongoUser+" ::
     	System.out.println("mongoDBFactory() ************************************************************************ "+mongoDBFactory());
         return new MongoTemplate(mongoDBFactory());
     }
-	
+        
+    
 }
