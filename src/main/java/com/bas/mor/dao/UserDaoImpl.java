@@ -5,11 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.bas.mor.model.LoginDtl;
+import com.bas.mor.model.PlaceOrder;
 import com.bas.mor.model.UserDtl;
 import com.bas.mor.mongo.repo.LoginRepo;
+import com.bas.mor.util.Constants;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 @Component(value="userDao")
 public class UserDaoImpl implements UserDao {
@@ -21,28 +29,30 @@ public class UserDaoImpl implements UserDao {
 	LoginRepo loginRepo;
 
 	@Override
-	public LoginDtl getLoginDtl(String userName){
+	public LoginDtl getLoginDtl(LoginDtl dtl){
+		
+		LoginDtl loginDtl = null;
+		/*DBObject dbObj = null;
+		DBCollection collection = mongoTemplate.getCollection(Constants.LOGIN_DLT);*/
+		String queryObject = "";
+		if(dtl.getEmail() != null && dtl.getEmail()!=""){
+			queryObject = "{'email' : '"+dtl.getEmail()+"'}";
+		}
+		if(dtl.getPhone() != null){
+			queryObject = "{'phone' : '"+dtl.getPhone()+"'}";
+		}
 
-		/*Aggregation aggregations = newAggregation(
-				match(Criteria.where("userId").is(userId))
-				);
-		LoginDtl result = getQueryAggrgationResults(aggregations,Constants.LOGIN_DLT);
-		
-		 */
+		BasicQuery query= new BasicQuery(queryObject);
+		loginDtl = mongoTemplate.findOne(query, LoginDtl.class);
+		/*if(dbCursor.hasNext()){
+			dbObj = dbCursor.next();
+			loginDtl = (LoginDtl) dbObj;
+			
+		}*/
+
 		//insert();
-		LoginDtl loginDtl = loginRepo.findByUserName(userName);
+		//LoginDtl loginDtl = loginRepo.findByUserName(userName);
 		return loginDtl;
-	}
-	
-	private void insert(){
-		LoginDtl dtl = new LoginDtl();
-		dtl.setFirstName("test");
-		dtl.setLastName("test");
-		dtl.setMessage("done");
-		dtl.setPassword("test");
-		dtl.setPassword("test");
-		loginRepo.save(dtl);
-		
 	}
 
 	private LoginDtl getQueryAggrgationResults(Aggregation aggregations,String collectionNameToFetchRecords) {
@@ -60,13 +70,60 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void saveUserDtl(UserDtl dtl) {
-		
+
 		mongoTemplate.save(dtl);
 	}
 
 	@Override
 	public void saveLoginDtl(LoginDtl dtl) {
-		
+
 		mongoTemplate.save(dtl);
 	}
+
+	@Override
+	public UserDtl getUserDetails(LoginDtl loginDtl) {
+		UserDtl userdtl=null;
+		String queryObject="";
+		/*DBCollection collection=mongoTemplate.getCollection(Constants.USER_DLT);*/
+		if(loginDtl.getEmail()!=null && loginDtl.getEmail()!=""){
+			queryObject = "{'email' : '"+loginDtl.getEmail()+"'}";
+		}
+		if(loginDtl.getPhone()!=null){
+			queryObject = "{'phone': '"+loginDtl.getPhone()+"'}";
+		}
+		/*DBCursor dbCursor =collection.find(query);
+		if(dbCursor.hasNext()){
+			userdtl=(UserDtl) dbCursor.next();
+			
+		}*/
+		BasicQuery query=new BasicQuery(queryObject);
+		userdtl =mongoTemplate.findOne(query,UserDtl.class );
+		
+
+		return userdtl;
+	}
+
+	@Override
+	public UserDtl getUserDtl(String email) {
+		//BasicQuery query=new BasicQuery();
+		String queryObject = "";
+		queryObject = "{'email' : '"+email+"'}";
+		BasicQuery query=new BasicQuery(queryObject);
+		UserDtl userdtl = mongoTemplate.findOne(query,UserDtl.class );
+		
+		return userdtl;
+	}
+
+	
+	@Override
+	public PlaceOrder getPlaceDtl(PlaceOrder placeDtl) {
+		String queryObject = "";
+		BasicQuery query=new BasicQuery(queryObject);
+		PlaceOrder placedtl = mongoTemplate.findOne(query,PlaceOrder.class );
+		
+		return placedtl;
+	}
+
+	
+
 }

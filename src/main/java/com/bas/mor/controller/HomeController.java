@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bas.mor.model.LoginDtl;
 import com.bas.mor.model.Person;
+import com.bas.mor.model.PlaceOrder;
 import com.bas.mor.model.UserDtl;
 import com.bas.mor.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,11 +54,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public @ResponseBody LoginDtl login(@RequestParam(value="loginDtl") Object login, HttpServletRequest request, HttpServletResponse response){
+	public @ResponseBody UserDtl login(@RequestParam(value="loginDtl") Object login, HttpServletRequest request, HttpServletResponse response){
 		
 		ObjectMapper objMapper = new ObjectMapper();
 		LoginDtl loginDtl = null;
 		LoginDtl dtl = null;
+		UserDtl userDtl = null;
 		try {
 			loginDtl = objMapper.readValue(login.toString(), LoginDtl.class);
 			
@@ -69,18 +71,18 @@ public class HomeController {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
 		
-		System.out.println("loginDtl :::::::::::::::: "+loginDtl.toString());
+		System.out.println("loginDtl ::::::::::::::: "+loginDtl.toString());
 		
 		dtl = userService.getLoginDtls(loginDtl);
 		if(dtl == null){
-			loginDtl.setMessage("incorrect user or password...");
-			return loginDtl;
-		}else if(!loginDtl.getPassword().equals(dtl.getPassword())){
-			loginDtl.setMessage("incorrect user or password...");
-			return loginDtl;
+			return userDtl;
+		}else if(!dtl.getPassword().equals(loginDtl.getPassword())){
+			return userDtl;
 		}
 		
-		return dtl;
+		userDtl = userService.getUserDetails(loginDtl);
+		
+		return userDtl;
 	}
 	@RequestMapping(value="/regUser" , method=RequestMethod.GET )
 	public @ResponseBody String regUser(@RequestParam(value="userDtl") Object uDtl,HttpServletRequest request ,HttpServletResponse response){
@@ -88,7 +90,8 @@ public class HomeController {
 		UserDtl userDtl=null;
 		UserDtl dtl=null;
 		try{
-			userDtl=objMapper.readValue(uDtl.toString(),UserDtl.class);
+			System.out.println(uDtl.toString());
+			userDtl = objMapper.readValue(uDtl.toString(), UserDtl.class);
 		}
 		catch(Exception e )
 		{
@@ -103,5 +106,49 @@ public class HomeController {
 		
 		return "success";
 	}
+	@RequestMapping(value="/account",method=RequestMethod.GET)
+	public @ResponseBody UserDtl userDtl(@RequestParam String emailId, HttpServletRequest request,HttpServletResponse response){
+		ObjectMapper objMapper= new ObjectMapper();
+		
+		//String emailId = objMapper.readValues(email, String.class);
+		
+		System.out.println("emAIl ::::::::::::::"+emailId.toString());
+		UserDtl accountDtl =null;
+		UserDtl dtl=null;
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+		
+		dtl=userService.getUserDtl(emailId);
+		
+		return dtl;
+    }
 	
+	@RequestMapping(value="/placeorder", method=RequestMethod.GET)
+	public @ResponseBody PlaceOrder placeOrder(@RequestParam(value="/placeorder")Object pOrd, HttpServletRequest request,HttpServletResponse response){
+			
+		
+		//String emailId = objMapper.readValues(email, String.class);
+
+				ObjectMapper objMapper = new ObjectMapper();
+				PlaceOrder placeDtl = null;
+				PlaceOrder dtl = null;
+				UserDtl userDtl = null;
+				try {
+					placeDtl = objMapper.readValue(pOrd.toString(),PlaceOrder.class);
+					
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				response.addHeader("Access-Control-Allow-Origin", "*");
+				response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+				
+				System.out.println("placedtl ::::::::::::::: "+placeDtl.toString());
+				dtl = userService.getPlaceDtls(placeDtl);
+				
+		
+		return dtl;
+		
+	}
 }

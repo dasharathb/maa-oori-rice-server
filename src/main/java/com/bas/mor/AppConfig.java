@@ -38,7 +38,6 @@ public class AppConfig {
 	String mongoPwd;
 	@Value("${mongo.db.database}")
 	String mongoDB;
-
 	@Value("${mongo.db.host}")
 	String mongoHost;
 	@Value( "${mongo.db.port:27017}" )

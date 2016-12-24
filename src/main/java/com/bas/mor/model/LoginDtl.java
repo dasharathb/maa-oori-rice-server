@@ -8,24 +8,24 @@ public class LoginDtl {
 
 	@Id
 	private String id;
-	private String userName;
-	private String password;
 	private String firstName;
 	private String lastName;
-	private String message;
+	private String email;
+	private String phone;
+	private String password; 
 	
 	public LoginDtl() {
 		super();
 	}
 
-	public LoginDtl(String id, String userName, String password, String firstName, String lastName, String message) {
+	public LoginDtl(String id, String firstName, String lastName, String email, String phone, String password) {
 		super();
 		this.id = id;
-		this.userName = userName;
-		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.message = message;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
 	}
 
 	public String getId() {
@@ -34,22 +34,6 @@ public class LoginDtl {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -68,18 +52,35 @@ public class LoginDtl {
 		this.lastName = lastName;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "LoginDtl [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", message=" + message + "]";
+		return "LoginDtl [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", password=" + password + "]";
 	}
-			
+
+	
 }

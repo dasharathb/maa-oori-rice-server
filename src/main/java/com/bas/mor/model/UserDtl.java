@@ -1,39 +1,44 @@
 package com.bas.mor.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user_dtl")
 public class UserDtl {
-
+    @Id
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phone;
 	private String password;
-	private String addressLine1;
-	private String addressLine2;
-	private String city;
-	private String state;
-	private String pin;
+	private List<Address> address;
+	
 	
 	public UserDtl() {
 		super();
 	}
 
-	public UserDtl(String firstName, String lastName, String email, String phone, String password, String addressLine1,
-			String addressLine2, String city, String state, String pin) {
+	public UserDtl(String id, String firstName, String lastName, String email, String phone, String password,
+			List<Address> address) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
-		this.addressLine1 = addressLine1;
-		this.addressLine2 = addressLine2;
-		this.city = city;
-		this.state = state;
-		this.pin = pin;
+		this.address = address;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -76,52 +81,18 @@ public class UserDtl {
 		this.password = password;
 	}
 
-	public String getAddressLine1() {
-		return addressLine1;
+	public List<Address> getAddress() {
+		return address;
 	}
 
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
-
-	public String getAddressLine2() {
-		return addressLine2;
-	}
-
-	public void setAddressLine2(String addressLine2) {
-		this.addressLine2 = addressLine2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
+	public void setAddress(List<Address> address) {
+		this.address = address;
 	}
 
 	@Override
 	public String toString() {
-		return "RegDtl [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phone=" + phone
-				+ ", password=" + password + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2
-				+ ", city=" + city + ", state=" + state + ", pin=" + pin + "]";
+		return "UserDtl [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", password=" + password + ", address=" + address + "]";
 	}
-	
 
 }
