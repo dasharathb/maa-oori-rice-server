@@ -104,7 +104,7 @@ public class HomeController {
 		dtl=userService.saveUserDtl(userDtl);
 		//return dtl;	
 		
-		return "success";
+		return null;
 	}
 	@RequestMapping(value="/account",method=RequestMethod.GET)
 	public @ResponseBody UserDtl userDtl(@RequestParam String emailId, HttpServletRequest request,HttpServletResponse response){
@@ -124,7 +124,7 @@ public class HomeController {
     }
 	
 	@RequestMapping(value="/placeorder", method=RequestMethod.GET)
-	public @ResponseBody PlaceOrder placeOrder(@RequestParam(value="/placeorder")Object pOrd, HttpServletRequest request,HttpServletResponse response){
+	public @ResponseBody void placeOrder(@RequestParam(value="placeorder")Object pOrd, HttpServletRequest request,HttpServletResponse response){
 			
 		
 		//String emailId = objMapper.readValues(email, String.class);
@@ -133,6 +133,7 @@ public class HomeController {
 				PlaceOrder placeDtl = null;
 				PlaceOrder dtl = null;
 				UserDtl userDtl = null;
+				System.out.println(pOrd.toString());
 				try {
 					placeDtl = objMapper.readValue(pOrd.toString(),PlaceOrder.class);
 					
@@ -145,10 +146,20 @@ public class HomeController {
 				response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
 				
 				System.out.println("placedtl ::::::::::::::: "+placeDtl.toString());
-				dtl = userService.getPlaceDtls(placeDtl);
+				userService.saveOrderDtl(placeDtl);
 				
+  }
+	@RequestMapping(value="/orderHistory",method=RequestMethod.GET)
+	public @ResponseBody List<PlaceOrder> placeOrder(@RequestParam String emailId, HttpServletRequest request,HttpServletResponse response){
 		
+		//String emailId = objMapper.readValues(email, String.class);
+		
+		System.out.println("emAIl ::::::::::::::"+emailId.toString());
+		List<PlaceOrder> dtl=null;
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+		dtl=userService.getOrderHistory(emailId);
 		return dtl;
-		
-	}
+    }
+	
 }

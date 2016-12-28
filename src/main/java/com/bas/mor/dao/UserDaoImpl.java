@@ -1,6 +1,8 @@
 package com.bas.mor.dao;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -73,6 +75,12 @@ public class UserDaoImpl implements UserDao {
 
 		mongoTemplate.save(dtl);
 	}
+	
+	@Override
+	public void savePlaceDtl(PlaceOrder dtl) {
+
+		mongoTemplate.save(dtl);
+	}
 
 	@Override
 	public void saveLoginDtl(LoginDtl dtl) {
@@ -114,16 +122,15 @@ public class UserDaoImpl implements UserDao {
 		return userdtl;
 	}
 
-	
 	@Override
-	public PlaceOrder getPlaceDtl(PlaceOrder placeDtl) {
+	public List<PlaceOrder> getPlaceOrderDtl(String emailId) {
 		String queryObject = "";
+		queryObject = "{'email' : '"+emailId+"'}";
 		BasicQuery query=new BasicQuery(queryObject);
-		PlaceOrder placedtl = mongoTemplate.findOne(query,PlaceOrder.class );
+		List<PlaceOrder> placeOrder = mongoTemplate.find(query,PlaceOrder.class );
 		
-		return placedtl;
+		return placeOrder;
 	}
 
-	
 
 }

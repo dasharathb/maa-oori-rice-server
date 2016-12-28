@@ -1,5 +1,7 @@
 package com.bas.mor.dao;
 
+import java.util.List;
+
 import com.bas.mor.model.LoginDtl;
 import com.bas.mor.model.PlaceOrder;
 import com.bas.mor.model.UserDtl;
@@ -16,7 +18,10 @@ public interface UserDao {
 
 	public UserDtl getUserDtl(String email);
 
-	public PlaceOrder getPlaceDtl(PlaceOrder placeDtl);
+	public void savePlaceDtl(PlaceOrder placeDtl);
+
+
+	public List<PlaceOrder> getPlaceOrderDtl(String emailId);
 
 
 }

@@ -1,5 +1,7 @@
 package com.bas.mor.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +62,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PlaceOrder getPlaceDtls(PlaceOrder placeDtl) {
-		 return userDao.getPlaceDtl(placeDtl);
+	public void saveOrderDtl(PlaceOrder placeDtl) {
+		
+		userDao.savePlaceDtl(placeDtl);
+		
+		 
 	}
+
+	@Override
+	public List<PlaceOrder> getOrderHistory(String emailId) {
+		
+		return userDao.getPlaceOrderDtl(emailId);
+	}
+
+	
 
 
 	
