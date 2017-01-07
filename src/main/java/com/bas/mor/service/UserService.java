@@ -9,11 +9,11 @@ import com.bas.mor.model.UserDtl;
 public interface UserService {
 
 	public LoginDtl getLoginDtls(LoginDtl dtl);
-	public UserDtl saveUserDtl(UserDtl dtl);
+	public void saveUserDtl(UserDtl dtl);
 	public UserDtl getUserDetails(LoginDtl loginDtl);
 	public UserDtl getUserDtl(String email);
-	public void    saveOrderDtl(PlaceOrder placeDtl);
-	public List<PlaceOrder> getOrderHistory(String emailId);
+	public UserDtl getRegDtls(String email);
+	
 	
 	
 

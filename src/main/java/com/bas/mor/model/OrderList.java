@@ -3,10 +3,13 @@ package com.bas.mor.model;
 public class OrderList {
 	private String riceType;
 	private String quantity;
-	
-	public OrderList() {
+    public OrderList() {
 		super();
-		// TODO Auto-generated constructor stub
+		}
+	public OrderList(String riceType, String quantity) {
+		super();
+		this.riceType = riceType;
+		this.quantity = quantity;		
 	}
 	public String getRiceType() {
 		return riceType;
@@ -20,10 +23,10 @@ public class OrderList {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
-	
 	@Override
 	public String toString() {
 		return "OrderList [riceType=" + riceType + ", quantity=" + quantity + "]";
 	}
 	
 }
+	

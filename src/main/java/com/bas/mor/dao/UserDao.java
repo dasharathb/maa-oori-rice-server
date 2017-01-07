@@ -18,10 +18,11 @@ public interface UserDao {
 
 	public UserDtl getUserDtl(String email);
 
-	public void savePlaceDtl(PlaceOrder placeDtl);
+	
 
+	public UserDtl getRegDtls(String emailId);
 
-	public List<PlaceOrder> getPlaceOrderDtl(String emailId);
+	
 
 
 }

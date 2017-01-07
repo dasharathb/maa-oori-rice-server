@@ -4,25 +4,30 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="place_dtl")
+@Document(collection="order_dtl")
 public class PlaceOrder {
 	private String id;
 	private String check;
 	private String email;
 	private String phone;
 	private List<OrderList> orderList;
+	private String status;
+    private String date;	
 	
 	public PlaceOrder() {
 		super();
 	}
 
-	public PlaceOrder(String id, String check, String email, String phone, List<OrderList> orderList) {
+	public PlaceOrder(String id, String check, String email, String phone, List<OrderList> orderList, String status,
+			String date) {
 		super();
 		this.id = id;
 		this.check = check;
 		this.email = email;
 		this.phone = phone;
 		this.orderList = orderList;
+		this.status = status;
+		this.date = date;
 	}
 
 	public String getId() {
@@ -65,13 +70,27 @@ public class PlaceOrder {
 		this.orderList = orderList;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "PlaceOrder [id=" + id + ", check=" + check + ", email=" + email + ", phone=" + phone + ", orderList="
-				+ orderList + "]";
+				+ orderList + ", status=" + status + ", date=" + date + "]";
 	}
-
-		
 	
    }
 

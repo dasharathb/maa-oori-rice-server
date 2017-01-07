@@ -76,11 +76,7 @@ public class UserDaoImpl implements UserDao {
 		mongoTemplate.save(dtl);
 	}
 	
-	@Override
-	public void savePlaceDtl(PlaceOrder dtl) {
-
-		mongoTemplate.save(dtl);
-	}
+	
 
 	@Override
 	public void saveLoginDtl(LoginDtl dtl) {
@@ -122,14 +118,17 @@ public class UserDaoImpl implements UserDao {
 		return userdtl;
 	}
 
+	
+
+	
 	@Override
-	public List<PlaceOrder> getPlaceOrderDtl(String emailId) {
+	public UserDtl getRegDtls(String emailId) {
 		String queryObject = "";
 		queryObject = "{'email' : '"+emailId+"'}";
 		BasicQuery query=new BasicQuery(queryObject);
-		List<PlaceOrder> placeOrder = mongoTemplate.find(query,PlaceOrder.class );
-		
-		return placeOrder;
+
+		UserDtl userdtl =  mongoTemplate.findOne(query,UserDtl.class);
+		return userdtl;
 	}
 
 

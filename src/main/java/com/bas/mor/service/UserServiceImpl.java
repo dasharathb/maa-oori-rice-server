@@ -30,15 +30,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDtl saveUserDtl(UserDtl dtl) {
+	public void saveUserDtl(UserDtl dtl) {
 		
 		LoginDtl loginDtl = setLoginData(dtl);
 		userDao.saveLoginDtl(loginDtl);
 		
 		dtl.setPassword(null);
 		userDao.saveUserDtl(dtl);
-		
-		return null;
+
 	}
 	
 	private LoginDtl setLoginData(UserDtl dtl){
@@ -61,18 +60,12 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserDtl(email);
 	}
 
+	
+	
 	@Override
-	public void saveOrderDtl(PlaceOrder placeDtl) {
-		
-		userDao.savePlaceDtl(placeDtl);
-		
-		 
-	}
-
-	@Override
-	public List<PlaceOrder> getOrderHistory(String emailId) {
-		
-		return userDao.getPlaceOrderDtl(emailId);
+	public UserDtl getRegDtls(String emailId) {
+	
+		return userDao.getRegDtls(emailId);
 	}
 
 	

@@ -14,15 +14,15 @@ public class UserDtl {
 	private String email;
 	private String phone;
 	private String password;
+	private Boolean isAdmin;
 	private List<Address> address;
-	
-	
+		
 	public UserDtl() {
 		super();
 	}
 
 	public UserDtl(String id, String firstName, String lastName, String email, String phone, String password,
-			List<Address> address) {
+			Boolean isAdmin, List<Address> address) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -30,6 +30,7 @@ public class UserDtl {
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		this.isAdmin = isAdmin;
 		this.address = address;
 	}
 
@@ -81,6 +82,14 @@ public class UserDtl {
 		this.password = password;
 	}
 
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	public List<Address> getAddress() {
 		return address;
 	}
@@ -92,7 +101,8 @@ public class UserDtl {
 	@Override
 	public String toString() {
 		return "UserDtl [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", phone=" + phone + ", password=" + password + ", address=" + address + "]";
+				+ ", phone=" + phone + ", password=" + password + ", isAdmin=" + isAdmin + ", address=" + address + "]";
 	}
+
 
 }
